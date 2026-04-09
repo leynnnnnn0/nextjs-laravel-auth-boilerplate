@@ -1,4 +1,4 @@
-# 🚀 Next.js + Laravel Auth Starter
+# Next.js + Laravel Auth Starter
 
 Production-ready authentication using **Laravel Fortify + Sanctum +
 Next.js**\
@@ -6,7 +6,7 @@ Secure, reusable, and built with **httpOnly cookie authentication**
 
 ------------------------------------------------------------------------
 
-## 📦 Project Structure
+## Project Structure
 
     sog/
     ├── api-backend   # Laravel API (Fortify + Sanctum)
@@ -14,7 +14,7 @@ Secure, reusable, and built with **httpOnly cookie authentication**
 
 ------------------------------------------------------------------------
 
-## 🔐 Auth Strategy
+## Auth Strategy
 
 -   Laravel Fortify → handles login, register, password reset
 -   Laravel Sanctum → issues and validates API tokens
@@ -23,20 +23,20 @@ Secure, reusable, and built with **httpOnly cookie authentication**
 
 ------------------------------------------------------------------------
 
-## ❗ Why This Setup
+## Why This Setup
 
-Most tutorials use `localStorage` for tokens ❌\
+Most tutorials use `localStorage` for tokens\
 This is **not secure** in production (XSS risk)
 
 This project uses:
 
--   ✅ httpOnly cookies (secure)
--   ✅ No token exposure to frontend
--   ✅ Server-side route protection
+-  httpOnly cookies (secure)
+-  No token exposure to frontend
+-  Server-side route protection
 
 ------------------------------------------------------------------------
 
-## ⚙️ Backend Setup (Laravel)
+## Backend Setup (Laravel)
 
 ### Install
 
@@ -86,7 +86,7 @@ class User extends Authenticatable
 
 ------------------------------------------------------------------------
 
-## ⚙️ Frontend Setup (Next.js)
+## Frontend Setup (Next.js)
 
 ### Environment
 
@@ -106,7 +106,7 @@ fetch(url, {
 
 ------------------------------------------------------------------------
 
-## 🔐 Auth Flow
+## Auth Flow
 
 1.  User logs in
 2.  Laravel returns httpOnly cookie
@@ -116,7 +116,7 @@ fetch(url, {
 
 ------------------------------------------------------------------------
 
-## 🛡 Route Protection
+## Route Protection
 
 **middleware.ts**
 
@@ -136,7 +136,7 @@ export function middleware(request) {
 
 ------------------------------------------------------------------------
 
-## 🔄 Auth Endpoints
+## Auth Endpoints
 
   Endpoint           Method
   ------------------ --------
@@ -148,7 +148,7 @@ export function middleware(request) {
 
 ------------------------------------------------------------------------
 
-## ✅ Production Checklist
+## Production Checklist
 
 ### Backend
 
@@ -169,22 +169,22 @@ export function middleware(request) {
 
 ------------------------------------------------------------------------
 
-## ⚡ Features
+## Features
 
--   🔒 Secure authentication (XSS-safe)
--   ♻️ Reusable starter template
--   🚀 Fast project setup
--   🧩 Clean API + frontend separation
+-  Secure authentication (XSS-safe)
+-  Reusable starter template
+-  Fast project setup
+-  Clean API + frontend separation
 
 ------------------------------------------------------------------------
 
-## 💡 Purpose
+## Purpose
 
 Reusable auth starter so you **don't rebuild authentication every
 project**
 
 ------------------------------------------------------------------------
 
-## ⭐ Tip
+## Tip
 
-If this helps you, star the repo 😄
+If this helps you, star the repo 
