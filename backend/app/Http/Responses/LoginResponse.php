@@ -18,7 +18,7 @@ class LoginResponse implements LoginResponseContract
                 'auth_token',        // cookie name
                 $token,              // value — the Sanctum token
                 60 * 24,             // minutes — match sanctum expiration
-                '/dashboard',        // path
+                '/',                  // path
                 env('SESSION_DOMAIN', 'localhost'), // domain
                 env('APP_ENV') === 'production',    // secure — HTTPS only in prod
                 true,                // httpOnly 
