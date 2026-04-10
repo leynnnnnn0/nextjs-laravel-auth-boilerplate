@@ -9,21 +9,25 @@ class LoginResponse implements LoginResponseContract
 {
     public function toResponse($request)
     {
-        $user  = $request->user();
-        $token = $user->createToken('auth-token')->plainTextToken;
+        $user = $request->user();
+        $remember = $request->boolean('remember');
+        $minutes = $remember ? 60 * 2 : 60;
+        $expiresAt = $remember ? now()->addHours(2) : now()->addHour();
+
+        $token = $user->createToken('auth-token', ['*'], $expiresAt)->plainTextToken;
 
         return response()
             ->json(['user' => $user->only('id', 'name', 'email')])
             ->cookie(
-                'auth_token',        // cookie name
-                $token,              // value — the Sanctum token
-                60 * 24,             // minutes — match sanctum expiration
-                '/',                  // path
-                env('SESSION_DOMAIN', 'localhost'), // domain
-                env('APP_ENV') === 'production',    // secure — HTTPS only in prod
-                true,                // httpOnly 
-                false,               // raw
-                'Lax'                // sameSite — use 'None' if cross-domain in prod
+                'auth_token',
+                $token,
+                $minutes,
+                '/',
+                env('SESSION_DOMAIN', ''),
+                env('APP_ENV') === 'production',
+                true,
+                false,
+                'Lax'
             );
     }
 }

@@ -1,44 +1,37 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import AppLogo from "@/components/ui/AppLogo";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { useSearchParams } from "next/navigation";
 
-
-export default function LoginPage() {
-  const router = useRouter();
+export default function ForgotPasswordPage() {
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
-  const wasReset = searchParams.get("reset") === "true";
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setLoading(true);
 
     const form = new FormData(e.currentTarget);
 
     try {
-      await api("/api/login", {
+      await api("/api/forgot-password", {
         method: "POST",
         body: JSON.stringify({
           email: form.get("email"),
-          password: form.get("password"),
-          remember: form.get("remember") == null ? false : true,
         }),
       });
-      router.push("/dashboard");
+
+      setSuccess("We sent a password reset link to your email.");
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -49,17 +42,11 @@ export default function LoginPage() {
       <div className="h-fit w-110 rounded-lg shadow-lg dark:bg-white space-y-4 p-5 flex justify-center items-center flex-col">
         <AppLogo />
         <div className="text-center">
-          <h3 className="text-xl font-bold">Log in to your account</h3>
+          <h3 className="text-xl font-bold">Forgot your password?</h3>
           <h6 className="text-black/40 text-sm">
-            Enter your email and password below to log in
+            Enter your email and we'll send you a reset link
           </h6>
         </div>
-
-        {wasReset && (
-          <p className="text-green-500 text-sm">
-            Password reset successfully. Please log in.
-          </p>
-        )}
 
         <form onSubmit={handleSubmit} className="w-full space-y-4">
           <div className="space-y-2 flex flex-col items-start w-full">
@@ -72,39 +59,21 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="space-y-2 flex flex-col items-start w-full">
-            <div className="flex items-center justify-between w-full">
-              <Label>Password</Label>
-              <Link href="/forgot-password" className="underline text-xs">Forgot Password</Link>
-            </div>
-            <Input
-              required
-              name="password"
-              type="password"
-              placeholder="••••••••"
-            />
-          </div>
-
           {error && <p className="text-red-500 text-sm">{error}</p>}
-
-          <FieldGroup>
-            <Field orientation="horizontal">
-              <Checkbox id="tremember" name="remember" />
-              <FieldLabel htmlFor="remember">Remember Me</FieldLabel>
-            </Field>
-          </FieldGroup>
+          {success && <p className="text-green-500 text-sm">{success}</p>}
 
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Sending..." : "Send Reset Link"}
           </Button>
         </form>
+
         <p className="text-sm text-black/40">
-          Don't have an account?{" "}
+          Remembered it?{" "}
           <Link
-            href="/register"
+            href="/login"
             className="text-black font-medium hover:underline"
           >
-            Register
+            Back to login
           </Link>
         </p>
       </div>

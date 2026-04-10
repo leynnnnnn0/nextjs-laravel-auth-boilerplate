@@ -11,6 +11,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
+use Laravel\Fortify\Fortify;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,5 +36,11 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_ENV') === 'production') {
             URL::forceScheme('https');
         }
+
+        Fortify::resetPasswordView(function ($request) {
+            return redirect(
+                env('FRONTEND_URL') . '/reset-password?token=' . $request->token . '&email=' . urlencode($request->email)
+            );
+        });
     }
 }
