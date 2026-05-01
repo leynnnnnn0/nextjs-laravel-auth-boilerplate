@@ -24,4 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/user', fn($req) => response()->json($req->user()));
 
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+
 });

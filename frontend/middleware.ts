@@ -4,12 +4,13 @@ import type { NextRequest } from "next/server";
 
 const PUBLIC_ROUTES = ["/", "/login", "/register", "/forgot-password"];
 
-export function proxy(request: NextRequest) {
+export default function middleware(request: NextRequest) {
   const token = request.cookies.get("auth_token")?.value;
-  console.log(token);
   const { pathname } = request.nextUrl;
 
-  const isPublic = PUBLIC_ROUTES.some((r) => pathname.startsWith(r));
+  const isPublic =
+    PUBLIC_ROUTES.includes(pathname) ||
+    PUBLIC_ROUTES.some((route) => route !== "/" && pathname.startsWith(route));
 
   if (!token && !isPublic) {
     return NextResponse.redirect(new URL("/login", request.url));
